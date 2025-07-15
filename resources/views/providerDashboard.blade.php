@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1>Provider dashboard</h1>
+    <ol>
+    @foreach ($users as $task)
+    <li>user id: {{ $task['user_id'] }}</li>
+    <li>user name: {{ $task['name'] }}</li>
+    <li>user email: {{ $task['email'] }}</li>
+   
+    @endforeach
+</ol>
 </body>
 </html>
