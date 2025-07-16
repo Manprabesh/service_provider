@@ -16,7 +16,7 @@ class AuthController extends Controller
         ]);
             return redirect('/profile')->cookie(
 
-                "serivce",
+                "service",
                 request('email'),
 
             );

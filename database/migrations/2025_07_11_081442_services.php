@@ -23,7 +23,8 @@ return new class extends Migration
         });
         Schema::create('service_user',function(Blueprint $table){
             $table->integer('user_id');
-            $table->integer('service_id');      
+            $table->integer('service_id');
+            $table->string('status');      
         });
     }
 

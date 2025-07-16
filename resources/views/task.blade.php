@@ -5,5 +5,6 @@
     <li>{{ $task['service_name'] }}</li>
     <li>{{ $task['email'] }}</li>
     <li>{{ $task['price'] }}</li>
+    <li>{{ $task['status'] }}</li>
 </ol>
 @endforeach

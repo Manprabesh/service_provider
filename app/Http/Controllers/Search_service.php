@@ -30,7 +30,7 @@ class Search_service extends Controller
         // dd($service_to_send);
 
         if (!count($service_data)) {
-            dd("null");
+            return redirect()->back()->with('null',"There is no search services")->withInput();;
         } else {
             // dd($service_data);
                         return redirect()->back()->with('myData',$service_to_send)->withInput();;

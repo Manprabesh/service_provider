@@ -19,6 +19,11 @@
             search
         </button>
     </form>
+       @session('null')
+                <div class="alert alert-success" role="alert"> 
+                    {{ $value }}
+                </div>
+            @endsession
 
         @if(session('myData'))
         @foreach(session('myData') as $item)

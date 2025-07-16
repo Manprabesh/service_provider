@@ -11,7 +11,7 @@ class UserImport implements ToCollection,WithHeadingRow
 {
     public function collection(Collection $row)
     {
-        dd($row);
+        // dd($row);
         $data=[];
         for($i=0;$i<count($row);$i++){
             $data[]=[
