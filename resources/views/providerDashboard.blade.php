@@ -6,14 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    <button><a href="/provider-profile">Go to profile</a></button>
     <h1>Provider dashboard</h1>
-    <ol>
     @foreach ($users as $task)
+    <ol>
     <li>user id: {{ $task['user_id'] }}</li>
     <li>user name: {{ $task['name'] }}</li>
     <li>user email: {{ $task['email'] }}</li>
+    <li>Task status: {{ $task['status'] }}</li>
    
-    @endforeach
 </ol>
+    @endforeach
 </body>
 </html>

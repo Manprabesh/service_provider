@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\ProviderProfile;
 use App\Http\Middleware\EnsureTokenIsValid;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -6,6 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Search_service;
 use App\Http\Controllers\BookSevice;
 use App\Http\Controllers\ProviderAuth;
+use App\Http\Controllers\ProviderDashboard;
+// use App\Http\Controllers\providerProfile;
+
 
 
 Route::post('/search/service', [Search_service::class, 'services']);
@@ -52,3 +56,11 @@ Route::get('/providerAuth',function(){
 });
 
 Route::post('/provider/auth',[providerAuth::class,'login']);
+
+Route::get('/provider-profile',function(){
+    return view("providerProfile");
+});
+
+Route::post('/upload-photo',[ProviderProfile::class,'upload']);
+
+Route::get('/dashboard',[ProviderDashboard::class,"serve"]);

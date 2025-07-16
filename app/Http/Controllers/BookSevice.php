@@ -19,7 +19,7 @@ class BookSevice extends Controller
         $service_data = DB::table('services')->where('email', request('service_email'))->get();
 
         $service_provider_id = $service_data[0]->{'id'};
-        Log::info("providers id ->", [$service_provider_id => ['status' => 'pending']]);
+        // Log::info("providers id ->", [$service_provider_id, ['status' => 'pending']]);
 
         // dd("service datta", gettype($service_provider_id));
 
@@ -43,7 +43,7 @@ class BookSevice extends Controller
          */
         $user = User::find($user_id);
         // dd("--",[$service_provider_id][0]);
-        $user->services()->attach([$service_provider_id => ['status' => 'pending']]);
+        $user->services()->attach($service_provider_id , ['status' => 'pending']);
 
         $service_book_by_user = DB::table("service_user")->where('user_id', $user_id)->get();
 
