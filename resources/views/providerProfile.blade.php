@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Profile page</h1>
+    <h1>{{ session('session_key') }}</h1> 
     <form action="/upload-photo" method="POST" enctype="multipart/form-data">
                 @csrf
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Providers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,9 +17,12 @@ class BookSevice extends Controller
         /* 
         -> Got the email of the service provider
         */
-        $service_data = DB::table('services')->where('email', request('service_email'))->get();
+        $service_data = DB::table('providers')->where('email', request('service_email'))->get();
 
+        
         $service_provider_id = $service_data[0]->{'id'};
+
+        
         // Log::info("providers id ->", [$service_provider_id, ['status' => 'pending']]);
 
         // dd("service datta", gettype($service_provider_id));
@@ -27,7 +31,7 @@ class BookSevice extends Controller
          *-> Got the user email via cookie
          *   
          **/
-
+        
         $value = $request->cookie('service');
 
         /**
@@ -37,15 +41,18 @@ class BookSevice extends Controller
         $user_details = Db::table('users')->where('email', $value)->get('id');
 
         $user_id = $user_details[0]->{'id'};
-
+        
+        
         /**
          * Get the user from db by the id
-         */
+        */
         $user = User::find($user_id);
+        // dd("value",$user);
         // dd("--",[$service_provider_id][0]);
+
         $user->services()->attach($service_provider_id , ['status' => 'pending']);
 
-        $service_book_by_user = DB::table("service_user")->where('user_id', $user_id)->get();
+        $service_book_by_user = DB::table("providers_user")->where('user_id', $user_id)->get(); 
 
         // dd("servie list", count($values));
 
@@ -57,22 +64,22 @@ class BookSevice extends Controller
 
             Log::info("-_______________-");
 
-            $id = $values->{'service_id'};
+            $id = $values->{'provider_id'};
             $status = ["status" => $values->{'status'}];
             Log::info("status", [$status]);
-            $service_providers = Service::find($id);
+            $service_providers = Providers::find($id);
             Log::info("Service providers ->", [$service_providers]);
             $service[] = [$service_providers, $status];
             // $service[] = $status;
         }
 
-        for ($i = 0; $i < count($service); $i++) {
+        for ($i = 0; $i < count(value: $service); $i++) {  
             $serviceModel = $service[$i][0];
             $pivotData = $service[$i][1];
 
             $list_of_services[] = [
                 'service_id' => $serviceModel->id,
-                'service_name' => $serviceModel->service_name,
+                'service_name' => $serviceModel->service_type,
                 'email' => $serviceModel->email,
                 'price' => $serviceModel->price,
                 'status' => $pivotData['status']
@@ -90,7 +97,7 @@ class BookSevice extends Controller
 
         $user_details = Db::table('users')->where('email', $value)->get();
 
-        $service_book_by_user = DB::table("service_user")->where('user_id', $user_details[0]->{'id'})->get();
+        $service_book_by_user = DB::table("providers_user")->where('user_id', $user_details[0]->{'id'})->get();
 
         // dd("service book by user ->",$service_book_by_user);
 
@@ -104,8 +111,9 @@ class BookSevice extends Controller
             // Log::info($values->{'service_id'});
             $status = ["status" => $values->{'status'}];
 
-            $id = $values->{'service_id'};
-            $service_providers = Service::find($id);
+            $id = $values->{'provider_id'};
+            $service_providers = Providers::find($id);
+            // dd("Provid  ers",$service_providers);
             // Log::info("Service providers ->", [$service_providers]);
             $service[] = [$service_providers, $status];
 
@@ -117,7 +125,7 @@ class BookSevice extends Controller
 
             $list_of_services[] = [
                 'service_id' => $serviceModel->id,
-                'service_name' => $serviceModel->service_name,
+                'service_name' => $serviceModel->service_type,
                 'email' => $serviceModel->email,
                 'price' => $serviceModel->price,
                 'status' => $pivotData['status']

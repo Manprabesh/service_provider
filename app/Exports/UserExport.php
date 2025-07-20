@@ -2,22 +2,17 @@
 
 namespace App\Exports;
 
-use App\Models\User;
+// use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Models\servieModel;
+use App\Models\Providers;
 // use App\Invoice;
 class UserExport implements FromCollection
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
+   
     public function collection()
     {
-        return servieModel::select("name","email","service_name")->get();
+        return Providers::all();
     }
 
-    // public function heading():array
-    // {
-    //     return ["ID","Name","Email"];
-    // }
+   
 }

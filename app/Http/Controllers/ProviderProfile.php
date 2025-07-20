@@ -14,6 +14,7 @@ class ProviderProfile extends Controller{
             // Storage::disk('local')->put('example.txt', 'Contents');
             dd("it works",$path);
         }
+        dd(session()->all());
         dd("no file");
         
         // return view('profile');

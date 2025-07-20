@@ -20,7 +20,7 @@ class User extends  Model
     ];
 
     public function services():BelongsToMany{
-        return $this->belongsToMany(Service::class,'service_user','user_id', 'service_id');
+        return $this->belongsToMany(Providers::class,'providers_user','user_id', 'provider_id');
     }
   
 }

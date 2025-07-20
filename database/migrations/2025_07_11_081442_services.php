@@ -11,19 +11,32 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services',function(Blueprint $table){
+        Schema::create('providers',function(Blueprint $table){
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('service_name');
+            $table->string('service_type');
             $table->string('price');
-            $table->string('location');
+            $table->string('pincode')->nullable();
+            $table->string('DOB');
+            $table->string('nationality');
+            $table->string('phone');
+            $table->string('pan_no')->nullable();
+            $table->string('adhar_no')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('session_id')->nullable();
+            $table->string('review')->nullable();
+            $table->string('experience')->nullable();
+            $table->string('about')->nullable();
+            $table->string('town')->nullable();
+            $table->string('distric')->nullable();
+            $table->string('password')->nullable();
              $table->timestamps();
 
         });
-        Schema::create('service_user',function(Blueprint $table){
+        Schema::create('providers_user',function(Blueprint $table){
             $table->integer('user_id');
-            $table->integer('service_id');
+            $table->integer('provider_id');
             $table->string('status');      
         });
     }

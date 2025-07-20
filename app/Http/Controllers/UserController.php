@@ -22,7 +22,7 @@ class UserController extends Controller
     */
     public function export() 
     {
-        return Excel::download(new UserExport, 'users.xlsx');
+        return Excel::download(new UserExport, 'providers.xlsx',true, ['X-Vapor-Base64-Encode' => 'True']);
     }
          
     /**

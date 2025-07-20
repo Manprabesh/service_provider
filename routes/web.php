@@ -28,6 +28,8 @@ Route::get('/service', function () {
     return view('service');
 })->middleware(EnsureTokenIsValid::class);
 
+Route::get('users/export/', [UserController::class, 'export']);
+
 
 Route::controller(UserController::class)->group(
     function () {
@@ -47,13 +49,15 @@ Route::controller(AuthController::class)->group(
     }
 )->middleware(EnsureTokenIsValid::class);
 
-Route::post('/book/service',[BookSevice::class,'book']);
 
-Route::get('/task',[BookSevice::class,'get_services']);
+Route::controller(BookSevice::class)->group(
+    function(){
+        Route::get('task','get_services');
+        Route::post('/book/service','book');
+        
+    }
+);
 
-Route::get('/providerAuth',function(){
-    return view('providerAuth');
-});
 
 Route::post('/provider/auth',[providerAuth::class,'login']);
 

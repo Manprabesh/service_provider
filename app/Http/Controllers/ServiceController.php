@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Models\Providers;
 use Illuminate\Support\Facades\DB;
 
-class Search_service extends Controller
+class ServiceController extends Controller
 {
-    public function services()
-    {
-        // dd(request('service_name'));
+    public static function read_service(){
+        $url=request()->path();
+        $result=str_replace('service/',"",$url);
+        Log::info("url length",[$result]);
+        // dd($url);
 
-        $service_data = DB::table('providers')->where('service_type', request('service_name'))->get();
+         $service_data = DB::table('providers')->where('service_type', $result)->get();
 
         /**
          * Craft the object data to send back
@@ -40,5 +44,6 @@ class Search_service extends Controller
                         return redirect()->back()->with('myData',$service_to_send)->withInput();;
             // dd($service_data[0]->{'service_name'});
         }
+
     }
 }
