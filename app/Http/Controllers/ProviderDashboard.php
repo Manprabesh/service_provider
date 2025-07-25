@@ -15,6 +15,11 @@ class ProviderDashboard extends Controller
 
         $provider_mail = $request->cookie('provider_cookie');
 
+        // dd($provider_mail);
+        if(!$provider_mail){
+            return;
+        }
+
         $provider_value = Service::where('email', $provider_mail)->first();
         $service_book_by_user = DB::table('service_user')->where('service_id', $provider_value['id'])->get();
         // dd("service booked",$service_book_by_user);

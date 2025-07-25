@@ -38,6 +38,9 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('provider_id');
             $table->string('status');      
+            $table->string('amount');      
+            $table->string('currency');      
+            $table->string('order_id');      
         });
     }
 

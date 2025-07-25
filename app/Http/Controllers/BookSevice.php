@@ -6,21 +6,35 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\Providers;
-
+use Razorpay\Api\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 class BookSevice extends Controller
 {
     public static function book(Request $request)
     {
+        $input = $request->all();
+        $price=$input['price']*100 ;
+        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $payment = $api->order->create(array('receipt' => '123', 'amount' => $price, 'currency' => 'INR', 'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+        // Session::put('success', 'Payment successful');
+        Log::info("running");
+        // dd("implementing razor pay",$payment->id);
+        // dd($input['service_email']);
+        $serviceEmail = $input['service_email'];
+        session()->put('serviceEmail',$serviceEmail);
+        $user_email=$request->user_email;
+        
+// dd($serviceEmail);
 
+return redirect()->back()->with("order_id",$payment->id)->with('service_email', $serviceEmail);;
         /* 
         -> Got the email of the service provider
         */
         $service_data = DB::table('providers')->where('email', request('service_email'))->get();
-
         
         $service_provider_id = $service_data[0]->{'id'};
+
 
         
         // Log::info("providers id ->", [$service_provider_id, ['status' => 'pending']]);
@@ -50,7 +64,7 @@ class BookSevice extends Controller
         // dd("value",$user);
         // dd("--",[$service_provider_id][0]);
 
-        $user->services()->attach($service_provider_id , ['status' => 'pending']);
+        $user->services()->attach($service_provider_id , ['status' => 'pending',]);
 
         $service_book_by_user = DB::table("providers_user")->where('user_id', $user_id)->get(); 
 
@@ -90,6 +104,7 @@ class BookSevice extends Controller
             "services" => $list_of_services,
 
         ]);
+
     }
     public static function get_services(Request $request)
     {

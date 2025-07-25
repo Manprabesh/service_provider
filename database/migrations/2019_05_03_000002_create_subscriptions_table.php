@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('paused_at')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

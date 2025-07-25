@@ -8,28 +8,33 @@ use App\Http\Controllers\Search_service;
 use App\Http\Controllers\BookSevice;
 use App\Http\Controllers\ProviderAuth;
 use App\Http\Controllers\ProviderDashboard;
-// use App\Http\Controllers\providerProfile;
+use Illuminate\Http\Request;
 
 
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::controller(AuthController::class)->group(
+    function () {
+
+        Route::post('signup', 'create_user')->name('signup');
+        Route::post('user-login', 'login')->name('user-login');
+
+    }
+);
 
 Route::post('/search/service', [Search_service::class, 'services']);
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/profile', function () {
     return view('profile');
 })->middleware(EnsureTokenIsValid::class);
-
 
 Route::get('/service', function () {
     return view('service');
 })->middleware(EnsureTokenIsValid::class);
 
 Route::get('users/export/', [UserController::class, 'export']);
-
 
 Route::controller(UserController::class)->group(
     function () {
@@ -40,31 +45,23 @@ Route::controller(UserController::class)->group(
 )->middleware(EnsureTokenIsValid::class);
 
 
-Route::controller(AuthController::class)->group(
-    function () {
-
-        Route::post('signup', 'create_user')->name('signup');
-        Route::post('login', 'login')->name('login');
-
-    }
-)->middleware(EnsureTokenIsValid::class);
-
-
-Route::controller(BookSevice::class)->group(
-    function(){
-        Route::get('task','get_services');
-        Route::post('/book/service','book');
+// Route::controller(BookSevice::class)->group(
+//     function () {
+       
         
-    }
-);
+//     }
+//     )->middleware(EnsureTokenIsValid::class);
+    
+    Route::post('/book/service', [BookSevice::class,'book'])->middleware(EnsureTokenIsValid::class);;
+Route::post('/provider/auth', [providerAuth::class, 'login']);
 
 
-Route::post('/provider/auth',[providerAuth::class,'login']);
+Route::post('/upload-photo', [ProviderProfile::class, 'upload']);
 
-Route::get('/provider-profile',function(){
-    return view("providerProfile");
+Route::get('/dashboard', [ProviderDashboard::class, "serve"]);
+
+
+Route::get('/task',function(Request $request){
+    return view('serviceTask');
 });
 
-Route::post('/upload-photo',[ProviderProfile::class,'upload']);
-
-Route::get('/dashboard',[ProviderDashboard::class,"serve"]);

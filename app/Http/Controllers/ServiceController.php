@@ -11,6 +11,7 @@ class ServiceController extends Controller
 {
     public static function read_service(){
         $url=request()->path();
+        // dd($url);
         $result=str_replace('service/',"",$url);
         Log::info("url length",[$result]);
         // dd($url);
@@ -36,11 +37,13 @@ class ServiceController extends Controller
             ];
         }
         // dd("service to send",$service_to_send);
+        // dd($result);
 
         if (!count($service_data)) {
             return redirect()->back()->with('null',"There is no search services")->withInput();;
         } else {
             // dd($service_data);
+            // return redirect('/task');
                         return redirect()->back()->with('myData',$service_to_send)->withInput();;
             // dd($service_data[0]->{'service_name'});
         }

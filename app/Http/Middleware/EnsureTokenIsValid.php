@@ -5,30 +5,27 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class EnsureTokenIsValid
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+    
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->cookie()) {
-
-            // dd("cookie");
-            $value = $request->cookie('cookie_name');
-            // $value is already decrypted
-            // dd($value);
-            // return redirect('/profile');
-            return $next($request);
-            // dd("if cookie ->",$request->cookie('service_provider'));
-
+        if ($request->cookie('_user_')) {
+            $session_id=$request->cookie('_user_');
+           $result= DB::table('sessions')->where('id',$session_id)->first();
+           if($request->cookie('_user_')==$result->id){
+               $data = unserialize(base64_decode($result->payload));
+               $user_email=$data['user']["email"];
+            //    dd($user_email);
+         $request->user_email=$user_email;
+        //  dd($request);
+               return $next($request);
+           }
 
         } else {
-            // dd("else cookie ->",$request->cookie('cookie_name'));
-            return redirect('/');
+            return redirect('/login');
 
         }
 

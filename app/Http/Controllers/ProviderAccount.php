@@ -96,11 +96,10 @@ class ProviderAccount extends Controller
          * 
          */
 
-        session()->put('session_key', $email);// what happening here
+        session()->put('email', $email);// what happening here
         $sessionId = session()->getId();
         if ($user_value) {
-            $data="hello";
-            Log::info("user id ->",[$data]);
+
             $result=  DB::table('sessions')->where('id', $sessionId)->update([
                 'user_id' => $user_value['id']
             ]);
