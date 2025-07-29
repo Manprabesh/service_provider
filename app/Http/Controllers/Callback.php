@@ -43,7 +43,7 @@ $serviceEmail=session()->get("serviceEmail");
         $service_provider_id = $service_data[0]->{'id'};
 
 
-   $user->services()->attach($service_provider_id , ['status' => 'pending','amount'=>$payment->amount, 'currency'=>$payment->currency, 'order_id'=> $payment->order_id]);
+   $user->services()->attach($service_provider_id , ['status' => 'pending','amount'=>$payment->amount, 'currency'=>$payment->currency, 'order_id'=> $payment->order_id,'review'=>null] );
         
         return redirect('/profile');
 

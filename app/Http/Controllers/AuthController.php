@@ -15,11 +15,14 @@ class AuthController extends Controller
             'email' => request('email'),
             'password' => bcrypt(request('password'))
         ]);
+
+        session()->put('user',['email'=>request('email')]);
+        $sessionId = session()->getId();
+        $cookie = cookie('_user_',$sessionId);
+
+
         return redirect('/profile')->cookie(
-
-            "_user_",
-            request('email'),
-
+            $cookie
         );
 
     }
@@ -28,8 +31,7 @@ class AuthController extends Controller
     {
 
         $user_value = User::where('email', request('email'))->first();
-        $user_hash_password = $user_value->password;
-       
+
 
         if (!$user_value) {
 
@@ -37,21 +39,27 @@ class AuthController extends Controller
 
         }
 
+
+        $user_hash_password = $user_value->password;
+
         if (password_verify(request('password'), $user_hash_password)) {
             $user_id = $user_value->id;
+            $user_data=DB::table('users')->where('email',request('email'))->first();
+
+
             session()->put('user', ['email' => request('email')]);
-            session()->save(); 
+            session()->save();
             $sessionId=session()->getId();
             // dump("session id",$sessionId);
             $updated_table = DB::table('sessions')->where('id',$sessionId)->update(['user_id'=>$user_id]);
 
 
             $cookie = cookie('_user_', $sessionId);
-
+            session()->put('profile',$user_data->photo);
             return redirect('/profile')->cookie($cookie);
 
-        } 
-        
+        }
+
         else {
 
             return back()->with('response', 'Email or password is incorrect');

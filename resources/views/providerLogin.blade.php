@@ -23,7 +23,8 @@
             </button>
             <button id="signupTab"
                 class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-gray-800">
-                Sign Up
+                
+                <a href="/provider/create/account">Create account</a>
             </button>
         </div>
         @if (session('response'))
@@ -33,7 +34,7 @@
         @endif
 
         <!-- Login Form -->
-        <form id="loginForm" method="POST" action="{{ route('user-login') }}" class="space-y-6">
+        <form id="loginForm" method="POST" action="{{ route('provider-login') }}" class="space-y-6">
             @csrf
 
            
@@ -47,15 +48,7 @@
                 @enderror
             </div>
 
-            <div>
-                <label for="login_password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <input type="password" id="login_password" name="password" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter your password">
-                @error('password')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+            
 
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
@@ -70,68 +63,16 @@
                 class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
                 Sign In
             </button> 
-            <!-- <button class="w-full bg-green-600 mt-3 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
-                
-                </button> -->
-            </form>
-        
-        <!-- Sign Up Form -->
-        <form id="signupForm" method="POST" action="{{ ('signup') }}" class="space-y-6 hidden">
-            @csrf
-            <div>
-                <label for="signup_name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input type="text" id="signup_name" name="name" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter your full name" value="{{ old('name') }}">
-                @error('name')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="signup_email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="email" id="signup_email" name="email" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter your email" value="{{ old('email') }}">
-                @error('email')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="signup_password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <input type="password" id="signup_password" name="password" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Create a password">
-                @error('password')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm
-                    Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Confirm your password">
-            </div>
-
-            <div class="flex items-center">
-                <input type="checkbox" id="terms" name="terms" required
-                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                <label for="terms" class="ml-2 block text-sm text-gray-700">
-                    I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a> and <a
-                        href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
-                </label>
-            </div>
-
-            <button type="submit" id="create_button"
-                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
-                Create Account
-            </button>
         </form>
+ <button class="w-full bg-green-600 mt-3 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+    <a href="/provider/login">Login as a provider</a>
+                
+            </button>
+        <!-- Sign Up Form -->
+       
 
-           <a href="/provider/login">Login as a provider</a>
+
+       
     </div>
 
     <script>

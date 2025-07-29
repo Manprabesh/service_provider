@@ -18,9 +18,7 @@ Route::controller(ProviderAccount::class)->group(
         Route::get('/provider/create/account', function () {
             return view("providerAuth");
         });
-        Route::get('/password', function () {
-            return view('password');
-        });
+        Route::post('/provider/login', 'login')->name('provider-login');
         Route::get('/provider/profile', function () {
             return view('providerProfile');
         });

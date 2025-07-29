@@ -52,6 +52,7 @@ class ProviderAccount extends Controller
                 ]
             ]);
             $path = $photo->store('uploads');
+           
             $url = Storage::url($path);
             $localPath = storage_path('app/private/' . $path); // absolute local file path
             $upload = new UploadApi();
@@ -121,7 +122,7 @@ class ProviderAccount extends Controller
         // return view('password');
 
         $cookie = cookie('_provider_', $sessionId);
-        return redirect('/login')->cookie($cookie);
+        return redirect('/provider/dashboard')->cookie($cookie);
         // dd("uploaded to database");
 
 
@@ -134,15 +135,33 @@ class ProviderAccount extends Controller
     {
         dd("password", request('password2'));
     }
-
+    
     public static function login()
     {
-        // dd("hello"); 
-        $ck = request()->cookie("_provider_");
-        $session = DB::table('sessions')->where('id', $ck)->first();
-        $data = unserialize(base64_decode($session->payload));
 
-        dd($data);
+        $provider_value = Providers::where('email', request('email'))->first();
+
+
+        if (!$provider_value) {
+
+            return back()->with('response', 'Email or password is incorrect');
+
+        }
+      
+            $provider_id = $provider_value->id;
+            $provider_data=DB::table('providers')->where('email',request('email'))->first();
+
+            session()->put('provider', ['email' => request('email')]);
+            session()->save();
+            $sessionId=session()->getId();
+            // dump("session id",$sessionId);
+            $updated_table = DB::table('sessions')->where('id',$sessionId)->update(['user_id'=>$provider_id]);
+
+
+            $cookie = cookie('_provider_', $sessionId);
+            session()->put('profile',$provider_data->photo);
+            return redirect('/provider/dashboard')->cookie($cookie);
+
 
     }
 }
