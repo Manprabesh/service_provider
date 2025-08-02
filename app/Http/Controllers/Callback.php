@@ -21,31 +21,36 @@ class Callback extends Controller
             'razorpay_signature' => $request->razorpay_signature,
         );
 
-       $data= $api->utility->verifyPaymentSignature($attributes);
+        $data = $api->utility->verifyPaymentSignature($attributes);
         $payment = $api->payment->fetch($request->razorpay_payment_id);
         //save this to database
-        $amountPaid=$payment->amount;
+        $amountPaid = $payment->amount;
 
-$user_email=$request->user_email;
-// dd($payment);
+        $user_email = $request->user_email;
+        // dd($payment);
         // dd($payment);
 
-$serviceEmail=session()->get("serviceEmail");
-// dd($serviceEmail);
+        $serviceEmail = session()->get("serviceEmail");
+        // dd($serviceEmail);
         $user_details = DB::table('users')->where('email', $user_email)->get('id');
-
-        $user_id=$user_details[0]->id;
+        // dd($user_details);
+        $user_id = $user_details[0]->id;
         // dd($user_details[0]->id);
-          $user = User::find($user_id);
+        $user = User::find($user_id);
 
-            $service_data = DB::table('providers')->where('email', $serviceEmail)->get();
-        
+        $service_data = DB::table('providers')->where('email', $serviceEmail)->get();
+
         $service_provider_id = $service_data[0]->{'id'};
 
 
-   $user->services()->attach($service_provider_id , ['status' => 'pending','amount'=>$payment->amount, 'currency'=>$payment->currency, 'order_id'=> $payment->order_id,'review'=>null] );
-        
-        return redirect('/profile');
+        $user->services()->attach($service_provider_id, ['status' => 'pending', 'amount' => $payment->amount, 'currency' => $payment->currency, 'order_id' => $payment->order_id]);
 
+        DB::table('review')->insert([
+            'review' => "",
+            'providers_id' => $service_provider_id,
+            'user_id' => $user_id
+        ]);
+
+        return redirect('/profile');
     }
 }

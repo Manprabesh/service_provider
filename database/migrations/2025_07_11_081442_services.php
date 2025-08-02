@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('providers',function(Blueprint $table){
+        Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
@@ -31,20 +31,19 @@ return new class extends Migration
             $table->string('town')->nullable();
             $table->string('distric')->nullable();
             $table->string('password')->nullable();
-             $table->timestamps();
-
+            $table->timestamps();
         });
-        Schema::create('providers_user',function(Blueprint $table){
+        Schema::create('providers_user', function (Blueprint $table) {
+            $table->id();
             $table->integer('user_id');
             $table->integer('provider_id');
-            $table->string('status');      
-            $table->string('amount');      
-            $table->string('currency');      
-            $table->string('order_id');      
-            $table->string('review')->nullable();      
+            $table->string('status');
+            $table->string('amount');
+            $table->string('currency');
+            $table->string('order_id');
         });
 
-        Schema::create('review',function(Blueprint $table){
+        Schema::create('review', function (Blueprint $table) {
             $table->id('review_id');
             $table->string('review');
             $table->integer('providers_id');

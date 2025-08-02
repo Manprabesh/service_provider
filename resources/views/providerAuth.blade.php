@@ -135,12 +135,12 @@
                         <select id="service_type" name="service_type" required
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">Select service type</option>
-                            <option value="web_development">Web Development</option>
-                            <option value="mobile_development">Cleaner</option>
-                            <option value="ai_ml">Driver</option>
-                            <option value="cybersecurity">Lawyer</option>
+                            <option value="web development">Web Development</option>
+                            <option value="cleaner">Cleaner</option>
+                            <option value="driver">Driver</option>
+                            <option value="lawyer">Lawyer</option>
                             <option value="consulting">Consulting</option>
-                            <option value="other">Plumber</option>
+                            <option value="plumber">Plumber</option>
                         </select>
                     </div>
 

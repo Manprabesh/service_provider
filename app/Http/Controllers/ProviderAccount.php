@@ -84,18 +84,6 @@ class ProviderAccount extends Controller
 
         $user_value = Providers::where('email', $email)->first();
         $id2 = $user_value['id'];
-        // dd( "value",$id2);
-        /**
-         *  Create a seesion from the above data
-         *  id, name, email, 
-         */
-        /**
-         * ToDo
-         * create a session from -> id, name, email
-         * save the session value in db
-         * and the session id as cookie
-         * 
-         */
 
         session()->put('email', $email);// what happening here
         $sessionId = session()->getId();
@@ -112,14 +100,7 @@ class ProviderAccount extends Controller
 
         $session = DB::table('sessions')->where('id', session()->getId())->first();
         $data = unserialize(base64_decode($session->payload));
-        // dd("base payload",base64_decode($session->payload));
 
-        //send a email for account verification
-        /**
-         * Do it later
-         */
-
-        // return view('password');
 
         $cookie = cookie('_provider_', $sessionId);
         return redirect('/provider/dashboard')->cookie($cookie);
